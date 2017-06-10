@@ -115,7 +115,7 @@ public class MainActivity extends Activity implements TextureView.SurfaceTexture
             myTextView1.setText("Grayscale: "+R);
             myTextView2.setText("Saturation: "+T);
             int[] pixels = new int[bmp.getWidth()]; // pixels[] is the RGBA data
-            int[] centerM = new int[bmp.getHeight()];
+            int[] centerM = new int[bmp.getHeight()/5];
 
             for (int j = 0; j < bmp.getHeight(); j=j+5) {
 
@@ -141,16 +141,20 @@ public class MainActivity extends Activity implements TextureView.SurfaceTexture
                 else{
                     COM = 0;
                 }
-
+                centerM[j/5]=COM;
                 // update the row
                 bmp.setPixels(pixels, 0, bmp.getWidth(), 0, startY, bmp.getWidth(), 1);
             }
 
+            for (int k = 0; k < bmp.getHeight()/5-1; k=k+1) {
+                canvas.drawLine(centerM[k], k*5, centerM[k + 1], (k+1)*5, paint1);
+           }
+
         }
 
-        // draw a Line
+        // draw a circle at some position
         int pos = 50;
-        canvas.drawLine(pos, 240, 100,100, paint1); // x position, y position, diameter, color
+        canvas.drawCircle(pos, 240, 5, paint1); // x position, y position, diameter, color
 
         // write the pos as text
         canvas.drawText("pos = " + pos, 10, 200, paint1);
